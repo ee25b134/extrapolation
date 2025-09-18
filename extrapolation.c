@@ -22,14 +22,26 @@ double gaussian_noise(double stddev) {
 // Lagrange interpolation
 double lagrange_interpolate(double *x, double *y, int n, double xp) {
     double yp = 0.0;
+
     for (int i = 0; i < n; i++) {
-        double term = y[i];
+        double numerator = 1.0;
+        double denominator = 1.0;
+
         for (int j = 0; j < n; j++) {
-            if (j != i)
-                term *= (xp - x[j]) / (x[i] - x[j]);
+            if (j != i) {
+                numerator *= (xp - x[j]);
+                denominator *= (x[i] - x[j]);
+            }
         }
-        yp += term;
+
+        if (fabs(denominator) < 1e-12) {
+            fprintf(stderr, "Warning: Small denominator in Lagrange term %d\n", i);
+            continue; // skip this term to avoid instability
+        }
+
+        yp += y[i] * (numerator / denominator);
     }
+
     return yp;
 }
 
@@ -130,4 +142,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
