@@ -130,8 +130,8 @@ int main(int argc, char *argv[]) {
     double rmse_lagrange = compute_rmse(y_skipped_lagrange, y_skipped_true, M);
     double rmse_newton   = compute_rmse(y_skipped_newton, y_skipped_true, M);
 
-    printf("RMSE (Lagrange): %lf\n", rmse_lagrange);
-    printf("RMSE (Newton):   %lf\n", rmse_newton);
+    printf("RMSE (Lagrange): %.15lf\n", rmse_lagrange);
+    printf("RMSE (Newton):   %.15lf\n", rmse_newton);
 
     // Cleanup
     free(coeffs);
